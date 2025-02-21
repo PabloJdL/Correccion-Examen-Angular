@@ -1,0 +1,20 @@
+<section class="listing-apply">
+    <h2 class="section-heading">Apply now to live here</h2>
+    <form [formGroup]="applyForm" (submit)="submitApplication()">
+        <label for="user-name">Nombre Usuario</label>
+        <input id="user-name" type="text" formControlName="userName" required>
+
+        <label for="last-name">Apellidos</label>
+        <input id="last-name" type="text" formControlName="lastName" required>
+
+        <label for="age">Edad</label>
+        <input id="age" type="text" formControlName="age" required>
+
+        <label for="email">Email</label>
+        <input id="email" type="email" formControlName="email" required>
+
+        <input (click)="activarBoton()" id="terms" type="checkbox" formControlName="terms" required>
+        <label for="terms">Acepto los terminos y condiciones</label>
+        <button type="submit" class="primary" [disabled]="checboxChecked">Apply now</button>
+    </form>
+</section>

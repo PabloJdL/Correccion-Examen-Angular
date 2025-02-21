@@ -1,0 +1,22 @@
+<div *ngIf="product && product.stock > 0">
+    <h2>Product Details</h2>
+    <h3>{{ product.name }}</h3>
+    <h4>{{ product.price | currency }}</h4>
+    <p *ngIf="product.description != ''">{{ product.description }}</p>
+    <p>Stock: {{ product.stock }}</p>
+    <p *ngIf="product.caracteristicas.length > 0">Caracteristicas: {{ product.caracteristicas }}</p>
+    <p *ngIf="product.garantia.tipo != ''">Tipo garantia: {{ product.garantia.tipo }}</p>
+    <p *ngIf="product.garantia.periodo != ''">Periodo garantia: {{ product.garantia.periodo }}</p>
+    <button (click)="addToCart(product)">Buy</button>
+</div>
+
+<div *ngIf="product && product.stock == 0">
+    <h1>No tienes acceso a esa página</h1>
+    <button [routerLink]="['']">Volver a la tienda</button>
+</div>
+
+<div *ngIf="!product">
+    <h1>Error 404</h1>
+    <p>Error página no encontrada.</p>
+    <button [routerLink]="['']">Volver a la tienda</button>
+</div>
