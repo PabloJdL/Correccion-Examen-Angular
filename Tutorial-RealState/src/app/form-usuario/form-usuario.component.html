@@ -1,6 +1,6 @@
 <section class="listing-apply">
     <h2 class="section-heading">Apply now to live here</h2>
-    <form [formGroup]="applyForm" (submit)="submitApplication()">
+    <form [formGroup]="applyForm" (ngSubmit)="onSubmit()">
         <label for="user-name">Nombre Usuario</label>
         <input id="user-name" type="text" formControlName="userName" required>
 
@@ -13,8 +13,8 @@
         <label for="email">Email</label>
         <input id="email" type="email" formControlName="email" required>
 
-        <input (click)="activarBoton()" id="terms" type="checkbox" formControlName="terms" required>
+        <input id="terms" type="checkbox" formControlName="terms" required>
         <label for="terms">Acepto los terminos y condiciones</label>
-        <button type="submit" class="primary" [disabled]="checboxChecked">Apply now</button>
+        <button type="submit" class="primary" [disabled]="applyForm.get('terms')?.invalid">Apply now</button>
     </form>
 </section>

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-form-usuario',
@@ -11,59 +11,27 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 export class FormUsuarioComponent {
   checboxChecked: boolean = true;
 
-  applyForm = new FormGroup({
-      userName: new FormControl(''),
-      lastName: new FormControl(''),
-      age: new FormControl(''),
-      email: new FormControl(''),
-      terms: new FormControl('')
-    });
+  applyForm: FormGroup;
 
-    constructor() {}
+  constructor(private fb: FormBuilder) {
+    this.applyForm = this.fb.group({
+      userName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      age: ['', [Validators.required, Validators.min(17)]],
+      email: ['', [Validators.required, Validators.email]],
+      terms: ['', [Validators.requiredTrue]]
+    })
+  }
 
-    camposRellenos(): boolean {
-      if (this.applyForm.value.userName &&
-          this.applyForm.value.lastName &&
-          this.applyForm.value.age &&
-          this.applyForm.value.email &&
-          this.applyForm.value.terms) {
-
-        return true;
-
-      } else {
-        alert("Debes rellenar todos los campos")
-        return false;
-
-      }
+  onSubmit() {
+    if (this.applyForm.valid) {
+      console.log('Formulario válido: ', this.applyForm.value);
+      alert('Bienvenido ' + this.applyForm.get('userName')?.value);
+    
+    } else {
+      console.log('Formulario invalido')
+      alert('Formulario invalido')
     }
 
-    validarEdad(): boolean {
-      if(this.applyForm.value.age) {
-        if(parseInt(this.applyForm.value.age) >= 17) {
-          return true;
-        
-        } else {
-          alert("Debes ser mayor de 16 años");
-        }
-      }
-
-      return false;
-    }
-
-    activarBoton() {
-      if (this.applyForm.value.terms) {
-        this.checboxChecked = true;
-
-      } else {
-        this.checboxChecked = false;
-
-      }
-    }
-
-    submitApplication() {
-      if (this.camposRellenos() && this.validarEdad()){
-        alert("Bienvenido " + this.applyForm.value.userName + " " + this.applyForm.value.lastName);
-
-      }
-    }
+  }
 }
